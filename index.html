@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Forraje Verde</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://th.bing.com/th/id/OIG.UCTFBAvXDKd3uEgf3Br9?pid=ImgGn'); /* Reemplaza 'sergio.jpg' con la URL o ruta de tu imagen de fondo */
+            background-size: cover;
+            color: #333;
+        }
+
+        header {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            margin: 2em;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group label {
+            color: #000000; /* Color verde para las etiquetas del formulario */
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 0.7em 1em;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #a7ddaa;
+        }
+
+        .results {
+            margin-top: 2em;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1em;
+        }
+
+        .results p {
+            margin: 0;
+            padding: 1em;
+            border: 1px solid #4caf50; /* Borde verde para los resultados */
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s, background-color 0.3s; /* Añadí transición para el color de fondo */
+        }
+
+        .results p:hover {
+            transform: scale(1.1);
+            background-color: #a7ddaa; /* Cambia el color de fondo al pasar el ratón */
+        }
+
+        .results p strong {
+            font-weight: bold;
+            color: #4caf50; /* Color verde para los textos en negrita */
+        }
+
+        header {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            margin: 2em;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5em;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5em;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 0.7em 1em;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #a7ddaa;
+        }
+
+        .results {
+            margin-top: 2em;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1em;
+        }
+
+        .results p {
+            margin: 0;
+            padding: 1em;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .results p:hover {
+            transform: scale(1.1); /* Ajusta la escala según tu preferencia */
+            transition: transform 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Calculadora de Forraje Verde</h1>
+    </header>
+    <div class="container">
+        <div class="form-group">
+            <label for="area">Área (en hectáreas)</label>
+            <input type="number" id="area" />
+        </div>
+        <div class="form-group">
+            <label for="pesoPromedioMuestra">Peso promedio de la muestra (en kg)</label>
+            <input type="number" id="pesoPromedioMuestra" />
+        </div>
+        <div class="form-group">
+            <label for="numMuestras">Número de muestras</label>
+            <input type="number" id="numMuestras" />
+        </div>
+        <button onclick="calcular()">Calcular</button>
+        <div class="results"></div>
+    </div>
+    <script>
+        function calcular() {
+            var area = parseFloat(document.getElementById('area').value);
+            var pesoPromedioMuestra = parseFloat(document.getElementById('pesoPromedioMuestra').value);
+            var numMuestras = parseFloat(document.getElementById('numMuestras').value);
+
+            var cantidadForrajeM2 = pesoPromedioMuestra / numMuestras;
+            var cantidadForrajeArea = area * 10000 * cantidadForrajeM2;
+            var descuentoMalezaPisoteo = cantidadForrajeArea * 0.37;
+            var cantidadNetaConsumo = cantidadForrajeArea - descuentoMalezaPisoteo;
+            var cantidadForrajeAprovechableHa = cantidadNetaConsumo / area;
+            var consumoForrajeVerdeDiaLote = 450 * 0.10 * cantidadForrajeAprovechableHa;
+            var periodoPermanenciaDias = cantidadNetaConsumo / consumoForrajeVerdeDiaLote;
+            var totalConsumoPeriodoRotacion = consumoForrajeVerdeDiaLote * 42;
+            var areaDisponibleLote = totalConsumoPeriodoRotacion / cantidadForrajeAprovechableHa;
+            var capacidadCarga = cantidadForrajeAprovechableHa / areaDisponibleLote;
+
+            var resultsDiv = document.querySelector('.results');
+            resultsDiv.innerHTML = '';
+            resultsDiv.innerHTML += '<p>Cantidad de forraje por m2: ' + cantidadForrajeM2.toFixed(2) + ' kg</p>';
+            resultsDiv.innerHTML += '<p>Cantidad de forraje por área: ' + cantidadForrajeArea.toFixed(2) + ' kg</p>';
+            resultsDiv.innerHTML += '<p>Descuento por maleza y pisoteo: ' + descuentoMalezaPisoteo.toFixed(2) + ' kg</p>';
+            resultsDiv.innerHTML += '<p>Cantidad neta de consumo: ' + cantidadNetaConsumo.toFixed(2) + ' kg</p>';
+            resultsDiv.innerHTML += '<p>Cantidad de forraje aprovechable por Ha: ' + cantidadForrajeAprovechableHa.toFixed(2) + ' kg</p>';
+            resultsDiv.innerHTML += '<p>Consumo de forraje verde por día por lote: ' + consumoForrajeVerdeDiaLote.toFixed(2) + ' kg</p>';
+            resultsDiv.innerHTML += '<p>Periodo de permanencia: ' + periodoPermanenciaDias.toFixed(2) + ' días</p>';
+            resultsDiv.innerHTML += '<p>Total de consumo durante todo el periodo de rotación: ' + totalConsumoPeriodoRotacion.toFixed(2) + ' kg</p>';
+            resultsDiv.innerHTML += '<p>Área disponible para el lote: ' + areaDisponibleLote.toFixed(2) + ' Ha</p>';
+            resultsDiv.innerHTML += '<p>Capacidad de carga: ' + capacidadCarga.toFixed(2) + ' animales por Ha</p>';
+        }
+    </script>
+</body>
+
+</html>
